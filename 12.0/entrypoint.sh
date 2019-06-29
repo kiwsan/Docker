@@ -6,8 +6,12 @@ set -e
 # and pass them as arguments to the odoo process if not present in the config file
 : ${HOST:=${RDS_HOSTNAME:=${HOST:=${DB_PORT_5432_TCP_ADDR:='localhost'}}}}
 : ${PORT:=${RDS_PORT:=${PORT:=${DB_PORT_5432_TCP_PORT:=5432}}}}
-: ${USER:=${RDS_USERNAME:=${USER:=${DB_ENV_POSTGRES_USER:='odoo'}}}}
-: ${PASSWORD:=${RDS_PASSWORD:=${PASSWORD:=$DB_ENV_POSTGRES_PASSWORD:=${POSTGRES_PASSWORD:='odoo'}}}}
+: ${USER:=${RDS_USERNAME:=${USER:=${DB_ENV_POSTGRES_USER:='odoo12'}}}}
+: ${PASSWORD:=${RDS_PASSWORD:=${PASSWORD:=${DB_ENV_POSTGRES_PASSWORD:='odoo12'}}}}
+
+echo "PostgreSQL variables exported, attempting to create initial databases"
+
+python /etc/odoo/makedb.py
 
 DB_ARGS=()
 function check_config() {

@@ -56,7 +56,15 @@ RUN set -x; \
 
 # Copy entrypoint script and Odoo configuration file
 RUN pip3 install num2words xlwt
+
+# Copy python script
+COPY makedb.py /etc/odoo/
+RUN chown odoo /etc/odoo/makedb.py
+
+# Copy entrypoint script
 COPY ./entrypoint.sh /
+
+# Update Odoo Conf
 COPY ./odoo.conf /etc/odoo/
 RUN chown odoo /etc/odoo/odoo.conf
 
